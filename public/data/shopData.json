@@ -1,0 +1,22 @@
+[
+  {
+    "id": "shop-001",
+    "name": "Construction Point",
+    "owner": "Shajid Hasan",
+    "location": "Banani, Dhaka",
+    "createdAt": "2024-12-05",
+    "totalCategories": 5,
+    "totalProducts": 120,
+    "totalStock": 320
+  },
+  {
+    "id": "shop-002",
+    "name": "Electronics Hub",
+    "owner": "Tawsif Alam",
+    "location": "Dhanmondi, Dhaka",
+    "createdAt": "2025-01-15",
+    "totalCategories": 3,
+    "totalProducts": 75,
+    "totalStock": 160
+  }
+]

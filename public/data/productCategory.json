@@ -1,0 +1,54 @@
+[
+  {
+    "id": "cat-const-001",
+    "shopId": "shop-001",
+    "category": "Cement"
+  },
+  {
+    "id": "cat-const-002",
+    "shopId": "shop-001",
+    "category": "Bricks"
+  },
+  {
+    "id": "cat-const-003",
+    "shopId": "shop-001",
+    "category": "Iron Bar"
+  },
+  {
+    "id": "cat-const-004",
+    "shopId": "shop-001",
+    "category": "Tiles"
+  },
+  {
+    "id": "cat-const-005",
+    "shopId": "shop-001",
+    "category": "Sand"
+  },
+
+
+  {
+    "id": "cat-elec-001",
+    "shopId": "shop-002",
+    "category": "Refrigerators"
+  },
+  {
+    "id": "cat-elec-002",
+    "shopId": "shop-002",
+    "category": "Rice Cookers"
+  },
+  {
+    "id": "cat-elec-003",
+    "shopId": "shop-002",
+    "category": "Water Heaters"
+  },
+  {
+    "id": "cat-elec-004",
+    "shopId": "shop-002",
+    "category": "Washing Machines"
+  },
+  {
+    "id": "cat-elec-005",
+    "shopId": "shop-002",
+    "category": "Microwaves"
+  }
+]
