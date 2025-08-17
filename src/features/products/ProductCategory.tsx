@@ -10,14 +10,17 @@ type ProductCategory = {
 
 function ProductCategory() {
   const params = useParams<{ id: string }>();
+  console.log(params.id)
   const { data, loading, error } = useFetchData<ProductCategory[]>(
-    "/data/productCategory.json"
+    `/categories/shop/${params.id}`
   );
+
+  console.log(data?.data)
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error loading data</p>;
 
-  const filteredData = data?.filter((d) => d.shopId === params.id) ?? [];
+  const filteredData = data?.data?.filter((d) => d.shopId === params.id) ?? [];
 
   return (
     <div>
@@ -25,14 +28,14 @@ function ProductCategory() {
       {filteredData.length > 0 ? (
         <div className="flex flex-col gap-3">
           {filteredData.map((cat) => (
-            <ProductCategoryCard key={cat.id} cat={cat}></ProductCategoryCard>
+            <ProductCategoryCard key={cat._id} cat={cat}></ProductCategoryCard>
           ))}
         </div>
       ) : (
         <p>No categories found.</p>
       )}
       <Link
-        to={`/${params.id}/form`}
+        to={`/category-form`}
         className="border mt-2 block bg-blue-300 p-2"
       >
         Add Category +

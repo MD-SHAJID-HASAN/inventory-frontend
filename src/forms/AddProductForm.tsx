@@ -33,7 +33,9 @@ export default function AddProductForm() {
 
   // Fetch data
   const { data: shops } = useFetchData<any[]>("/shops");
-  const { data: categories } = useFetchData<any[]>(shopId ? `/categories/shop/${shopId}` : "");
+  const { data: categories } = useFetchData<any[]>(
+    shopId ? `/categories/shop/${shopId}` : ""
+  );
   const { data: brands } = useFetchData<any[]>(shopId ? `/brands` : "");
 
   const { register, control, handleSubmit, setValue, watch } =
@@ -81,8 +83,7 @@ export default function AddProductForm() {
       const purchasePrice =
         totalStock > 0
           ? data.sizes.reduce(
-              (sum, s) =>
-                sum + ((s.purchasePrice || 0) * (s.currentStock || 0)),
+              (sum, s) => sum + (s.purchasePrice || 0) * (s.currentStock || 0),
               0
             ) / totalStock
           : 0;
@@ -95,13 +96,14 @@ export default function AddProductForm() {
       }));
     }
 
-    if(!data.hasVariation){
+    if (!data.hasVariation) {
       data.sizes = [];
-      data.averageCost = data.purchasePrice
+      data.averageCost = data.purchasePrice;
     }
 
-    // post(data);
+    post(data);
     console.log(data);
+    alert('Product Added Successfully!')
   };
 
   return (
@@ -273,18 +275,17 @@ export default function AddProductForm() {
             placeholder="Purchase Price"
           />
 
-                      <label className="block font-medium">Stock</label>
-              <input
-                type="number"
-                {...register(`totalStock`, {
-                  valueAsNumber: true,
-                  required: true,
-                  min: 0,
-                })}
-                className="border p-2 rounded w-1/4"
-                placeholder="Stock"
-              />
-          
+          <label className="block font-medium">Stock</label>
+          <input
+            type="number"
+            {...register(`totalStock`, {
+              valueAsNumber: true,
+              required: true,
+              min: 0,
+            })}
+            className="border p-2 rounded w-1/4"
+            placeholder="Stock"
+          />
         </div>
       )}
 

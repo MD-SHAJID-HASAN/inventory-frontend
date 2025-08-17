@@ -3,6 +3,7 @@ import ShopCard from "../../components/ShopCard";
 import useFetchData from "../../hooks/useFetchData";
 import type { Shop } from "@/types";
 import { Link } from "react-router-dom";
+import BrandManager from "@/forms/AddBrandForm";
 
 function ShopList() {
   const { data, error, loading } = useFetchData<Shop[]>("/shops");
@@ -33,19 +34,20 @@ function ShopList() {
           Add Product
         </Link>
         <Link
-          to={"/transaction-form"}
+          to={"/category-form"}
           className="border p-2 bg-blue-500 rounded flex gap-2 cursor-pointer "
         >
           <PlusCircle></PlusCircle>
           Add Category
         </Link>
-        <Link
+        {/* <Link
           to={"/add-product-form"}
           className="border p-2 bg-blue-500 rounded flex gap-2 cursor-pointer "
         >
           <PlusCircle></PlusCircle>
           Add Brand
-        </Link>
+        </Link> */}
+        <BrandManager></BrandManager>
       </div>
 
       <div className="flex flex-col gap-3">

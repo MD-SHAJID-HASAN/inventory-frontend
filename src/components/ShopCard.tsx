@@ -7,7 +7,7 @@ interface ShopCardProps {
 
 const ShopCard: React.FC<ShopCardProps> = ({ shop }) => {
   return (
-    <Link to={`/shops/${shop.id}`}>
+    <Link to={`/shops/${shop._id}`}>
       <div className="border rounded-md p-4 shadow-md bg-white max-w-sm hover:bg-blue-200">
         <h2 className="text-xl font-bold mb-2">{shop.name}</h2>
         <p>

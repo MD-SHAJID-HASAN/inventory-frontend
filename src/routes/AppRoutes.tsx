@@ -7,6 +7,8 @@ import Home from "../pages/Home";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import TransactionForm from "@/forms/TransactionForm";
 
+import AddCategoryForm from "@/forms/AddCategoryForm";
+
 function AppRoutes() {
   const router = createBrowserRouter([
     {
@@ -19,6 +21,10 @@ function AppRoutes() {
         {
           path: "/shops",
           element: <ShopList></ShopList>,
+        },
+        {
+          path: "/category-form",
+          element: <AddCategoryForm></AddCategoryForm>,
         },
         {
           path: "/shops/:id",

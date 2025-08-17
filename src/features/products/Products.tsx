@@ -1,88 +1,90 @@
-import useFetchData from '../../hooks/useFetchData';
-import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useMemo } from "react";
+import { useParams } from "react-router-dom";
+import useFetchData from "../../hooks/useFetchData";
 
 interface Product {
   id: string;
   shopId: string;
   categoryId: string;
+  brandId: string;
   name: string;
-  brand: string;
   unit: string;
-  stock: number;
-  buyingPrice: number;
-  price: number;
+  totalStock: number;
+  purchasePrice: number;
+  sellingPrice: number;
+}
+
+interface Brand {
+  id: string;
+  name: string;
 }
 
 function Products() {
-  const params = useParams<{ id: string }>();
-  const { data, loading, error } = useFetchData<Product[]>('/data/productData.json');
-  const [products, setProducts] = useState<Product[]>([]);
+  const { id: categoryId } = useParams<{ id: string }>();
 
-  useEffect(() => {
-    if (data) {
-      const filtered = data.filter((d) => d.categoryId === params.id);
-      setProducts(filtered);
-    }
-  }, [data, params.id]);
+  // Fetch products
+  const { data: productData, loading: productLoading, error: productError } =
+    useFetchData<Product[]>(`/productModels/${categoryId}`);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error loading data</p>;
+  // Fetch brands
+  const { data: brandData, loading: brandLoading, error: brandError } =
+    useFetchData<Brand[]>("/brands");
+console.log(brandData?.data)
+  // Build brand map: brandId => brandName
+  const brandMap = useMemo(() => {
+    if (!brandData?.data) return {};
+    return brandData.data.reduce<Record<string, string>>((acc, brand) => {
+      acc[brand._id] = brand.name;
+      return acc;
+    }, {});
+  }, [brandData]);
 
-  const handleStockChange = (id: string, delta: number) => {
-    setProducts((prev) =>
-      prev.map((prod) =>
-        prod.id === id ? { ...prod, stock: Math.max(0, prod.stock + delta) } : prod
-      )
-    );
-  };
+  // console.log(brandMap)
+
+  if (productLoading || brandLoading) return <p>Loading...</p>;
+  if (productError || brandError) return <p>Error loading data</p>;
+  if (!productData?.data || productData.data.length === 0)
+    return <p>No products found for this category.</p>;
+
+  const products = productData.data;
 
   return (
     <div className="p-4">
       <h2 className="text-xl font-bold mb-4">Products</h2>
-      {products.length === 0 ? (
-        <p>No products found for this category.</p>
-      ) : (
-        <table className="w-full border text-sm">
-          <thead>
-            <tr className="bg-gray-100">
-              <th className="border px-2 py-1">Name</th>
-              <th className="border px-2 py-1">Brand</th>
-              <th className="border px-2 py-1">Stock</th>
-              <th className="border px-2 py-1">Buying Price</th>
-              <th className="border px-2 py-1">Stock Value</th>
-              <th className="border px-2 py-1">Selling Price</th>
-              <th className="border px-2 py-1">Actions</th>
+
+      <table className="w-full border text-sm">
+        <thead>
+          <tr className="bg-gray-100">
+            <th className="border px-2 py-1">Name</th>
+            <th className="border px-2 py-1">Brand</th>
+            <th className="border px-2 py-1 text-center">Stock</th>
+            <th className="border px-2 py-1 text-right">Buying Price</th>
+            <th className="border px-2 py-1 text-right">Stock Value</th>
+            <th className="border px-2 py-1 text-right">Selling Price</th>
+            <th className="border px-2 py-1 text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {products.map((product) => (
+            <tr key={product.id}>
+              <td className="border px-2 py-1">{product.name}</td>
+              <td className="border px-2 py-1">
+                {brandMap[product.brandId] || "Unknown"}
+              </td>
+              <td className="border px-2 py-1 text-center">{product.totalStock}</td>
+              <td className="border px-2 py-1 text-right">{product.purchasePrice}৳</td>
+              <td className="border px-2 py-1 text-right">
+                {product.purchasePrice * product.totalStock}৳
+              </td>
+              <td className="border px-2 py-1 text-right">{product.sellingPrice}৳</td>
+              <td className="border px-2 py-1 text-center">
+                <button className="px-2 py-1 bg-green-500 text-white rounded mr-1">+</button>
+                <button className="px-2 py-1 bg-red-500 text-white rounded">−</button>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {products.map((product) => (
-              <tr key={product.id}>
-                <td className="border px-2 py-1">{product.name}</td>
-                <td className="border px-2 py-1">{product.brand}</td>
-                <td className="border px-2 py-1 text-center">{product.stock}</td>
-                <td className="border px-2 py-1 text-right">{product.buyingPrice}৳</td>
-                <td className="border px-2 py-1 text-right">{product.buyingPrice * product.stock}৳</td>
-                <td className="border px-2 py-1 text-right">{product.price}৳</td>
-                <td className="border px-2 py-1 text-center">
-                  <button
-                    className="px-2 py-1 bg-green-500 text-white rounded mr-1"
-                    onClick={() => handleStockChange(product.id, 1)}
-                  >
-                    +
-                  </button>
-                  <button
-                    className="px-2 py-1 bg-red-500 text-white rounded"
-                    onClick={() => handleStockChange(product.id, -1)}
-                  >
-                    −
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
