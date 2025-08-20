@@ -9,15 +9,27 @@ import {
   Settings,
   Sun,
 } from "lucide-react";
-import { useParams } from "react-router-dom";
+import { useState } from "react";
+import { href, Link, useParams } from "react-router-dom";
 
 function HeaderU({ onToggle }: any) {
+  const [open, setOpen] = useState(false);
 
-  const params = useParams()
-console.log(params.id)
+  const actions = [
+    { id: "transaction", href: "/transaction-form", label: "Transaction" },
+    { id: "product", href: "/add-product-form", label: "Product" },
+    { id: "category", href: "/category-form", label: "Category" },
+    { id: "brand" , href: "/brand-form", label: "Brand" },
+  ];
+
+  const params = useParams();
+  console.log(params.id);
   const [darkMode, setDarkMode] = useDarkMode();
   return (
-    <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200/50 dark:border-slate-700/50 px-6 py-4 h-23.25 flex flex-col justify-center">
+    <div
+      className={`
+   bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200/50 dark:border-slate-700/50 px-6 py-4 h-23.25 flex flex-col justify-center`}
+    >
       <div className="flex items-center justify-between">
         {/* left section */}
         <div className="flex items-center space-x-4">
@@ -56,11 +68,34 @@ console.log(params.id)
         {/* right */}
         <div className="flex items-center space-x-3">
           {/* quick actions */}
-          <button className=" hidden lg:flex items-center space-x-2 py-2 px-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl hover:shadow-lg transition-a cursor-pointer">
-            <Plus className="w-4 h-4"></Plus>
-            <span className="text-sm font-medium">New</span>
-          </button>
+          <div className="relative">
+            {/* Main button */}
+            <button
+              onClick={() => setOpen(!open)}
+              className="hidden lg:flex items-center space-x-2 py-2 px-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl hover:shadow-lg transition-all"
+            >
+              <Plus className="w-4 h-4" />
+              <span className="text-sm font-medium">New</span>
+            </button>
 
+            {/* Dropdown menu */}
+            {open && (
+              <div className="absolute top-full mt-2 w-40 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-lg overflow-hidden z-50 flex flex-col">
+                {actions.map((action) => (
+                  <Link to={`${action.href}`}
+                    key={action.id}
+                    onClick={() => {
+                      console.log(`Create new ${action.label}`);
+                      setOpen(false);
+                    }}
+                    className="w-full text-left px-4 py-2 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700"
+                  >
+                    {action.label}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
 
           {/* dark-light toggle */}
           <button

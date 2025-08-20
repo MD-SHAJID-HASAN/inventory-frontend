@@ -8,8 +8,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import TransactionForm from "@/forms/TransactionForm";
 
 import AddCategoryForm from "@/forms/AddCategoryForm";
-
-
+import DashboardPage from "@/features/dashboard/DashboardPage";
 
 function AppRoutes() {
   const router = createBrowserRouter([
@@ -17,9 +16,8 @@ function AppRoutes() {
       path: "/",
       element: <Main></Main>,
       children: [
-        { path: "/",
-          element: <Home></Home>
-        },
+        { path: "/", element: <Home></Home> },
+        { path: "/dashboard", element: <DashboardPage></DashboardPage> },
         {
           path: "/shops",
           element: <ShopList></ShopList>,
@@ -30,19 +28,19 @@ function AppRoutes() {
         },
         {
           path: "/shops/:id",
-          element: <ProductCategory/>,
+          element: <ProductCategory />,
         },
         {
           path: "/shops/cat/:id",
-          element: <Products/>,
+          element: <Products />,
         },
         {
           path: "/add-product-form",
-          element: <AddProductForm/>,
+          element: <AddProductForm />,
         },
         {
           path: "/transaction-form",
-          element: <TransactionForm/>,
+          element: <TransactionForm />,
         },
       ],
     },

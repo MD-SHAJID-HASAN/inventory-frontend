@@ -1,7 +1,12 @@
+import ChartSection from "./ChartSection"
+import StatsGrid from "./StatsGrid"
 
 function DashboardPage() {
   return (
-    <div>DashboardPage</div>
+    <div>
+      <StatsGrid></StatsGrid>
+      <ChartSection></ChartSection>
+    </div>
   )
 }
 
