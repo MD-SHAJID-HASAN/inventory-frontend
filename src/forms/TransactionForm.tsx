@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import useFetchData from "@/hooks/useFetchData";
 import { useForm, useFieldArray } from "react-hook-form";
 import { API_URL } from "@/config";
@@ -63,7 +63,7 @@ export default function TransactionTableForm() {
     watchShopId ? `/categories/shop/${watchShopId}` : ""
   );
 
-  const { fields, append, remove, update } = useFieldArray({
+  const { fields, append, remove } = useFieldArray({
     control,
     name: "items",
   });
@@ -99,7 +99,7 @@ export default function TransactionTableForm() {
   //   });
   // }, [items, productModelsCache]);
 
-  const {post} = usePostData(`/transactions`)
+  const { post } = usePostData(`/transactions`);
 
   const onSubmit = (data: FormData) => {
     const payload = {
@@ -116,7 +116,6 @@ export default function TransactionTableForm() {
       })),
     };
     console.log("Payload to send:", payload);
-    // TODO: POST payload to backend
     post(payload);
   };
 
@@ -234,8 +233,7 @@ export default function TransactionTableForm() {
                   <td className="p-2 border">
                     <select
                       {...register(`items.${index}.category`, {
-                        onChange: (e) => {
-                          const value = e.target.value;
+                        onChange: () => {
                           setValue(`items.${index}.brand`, "");
                           setValue(`items.${index}.productModel`, "");
                         },
@@ -263,7 +261,9 @@ export default function TransactionTableForm() {
                           if (category && value) {
                             const key = `${category}-${value}`;
                             if (!productModelsCache[key]) {
-                              fetch(`${API_URL}/productModels/${category}/${value}`)
+                              fetch(
+                                `${API_URL}/productModels/${category}/${value}`
+                              )
                                 .then((res) => res.json())
                                 .then((data) => {
                                   setProductModelsCache((prev) => ({
@@ -271,7 +271,7 @@ export default function TransactionTableForm() {
                                     [key]: data?.data || [],
                                   }));
                                 });
-                                console.log(productModelsCache)
+                              console.log(productModelsCache);
                             }
                           }
                         },

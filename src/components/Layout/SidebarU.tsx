@@ -63,7 +63,7 @@ const menuItems = [
   },
 ];
 
-function SidebarU({ collapsed, onPageChange, currentPage, onToggle }: any) {
+function SidebarU({ collapsed, onPageChange, currentPage}: any) {
   const [expandedItems, setExpandedItems] = useState(new Set([""]));
 
   const toggleExpanded = (itemId: string) => {

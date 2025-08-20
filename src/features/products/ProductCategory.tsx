@@ -8,10 +8,14 @@ type ProductCategory = {
   category: string;
 };
 
+interface ProductCategoryResponse {
+  data: ProductCategory[];
+}
+
 function ProductCategory() {
   const params = useParams<{ id: string }>();
   console.log(params.id)
-  const { data, loading, error } = useFetchData<ProductCategory[]>(
+  const { data, loading, error } = useFetchData<ProductCategoryResponse>(
     `/categories/shop/${params.id}`
   );
 
@@ -27,7 +31,7 @@ function ProductCategory() {
       <h2>Product Categories for Shop: {params.id}</h2>
       {filteredData.length > 0 ? (
         <div className="flex flex-col gap-3">
-          {filteredData.map((cat) => (
+          {filteredData.map((cat : any) => (
             <ProductCategoryCard key={cat._id} cat={cat}></ProductCategoryCard>
           ))}
         </div>

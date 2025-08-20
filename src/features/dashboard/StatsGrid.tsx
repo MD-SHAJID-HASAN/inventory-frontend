@@ -1,6 +1,5 @@
 import {
-    ArrowDownRight,
-  ArrowRight,
+  ArrowDownRight,
   ArrowUpRight,
   CreditCard,
   DollarSign,
@@ -56,7 +55,10 @@ function StatsGrid() {
     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
       {stats.map((stat, index) => {
         return (
-          <div key={index} className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-2xl p-6 border border-slate-200/20 dark:hover:shadow-slate-900/20 transition-all duration-300 group">
+          <div
+            key={index}
+            className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-2xl p-6 border border-slate-200/20 dark:hover:shadow-slate-900/20 transition-all duration-300 group"
+          >
             <div className="flex items-start justify-between">
               <div className="flex-1">
                 <p className="text-sm font-medium text-slate-600 dark:text-slate-400 mb-2">
@@ -66,8 +68,18 @@ function StatsGrid() {
                   {stat.value}
                 </p>
                 <div className="flex items-center space-x-2">
-                  {stat.trend === "up" ? <ArrowUpRight className="w-4 h-4 text-green-500"></ArrowUpRight> : <ArrowDownRight className="w-4 h-4 text-red-500"></ArrowDownRight>}
-                  <span className={`${stat.trend === 'up' ? 'text-green-500' : 'text-red-500'}`}>{stat.change}</span>
+                  {stat.trend === "up" ? (
+                    <ArrowUpRight className="w-4 h-4 text-green-500"></ArrowUpRight>
+                  ) : (
+                    <ArrowDownRight className="w-4 h-4 text-red-500"></ArrowDownRight>
+                  )}
+                  <span
+                    className={`${
+                      stat.trend === "up" ? "text-green-500" : "text-red-500"
+                    }`}
+                  >
+                    {stat.change}
+                  </span>
                   <span className="text-sm text-slate-500 dark:text-slate-400">
                     Vs Last
                   </span>
@@ -76,13 +88,20 @@ function StatsGrid() {
               <div
                 className={`p-3 rounded-xl group-hover:scale-110 transition-all duration-300`}
               >
-                {<stat.icon className={`w-6 h-6 ${stat.textColor}`}></stat.icon>}
+                {
+                  <stat.icon
+                    className={`w-6 h-6 ${stat.textColor}`}
+                  ></stat.icon>
+                }
               </div>
             </div>
 
             {/* progress bar */}
             <div className="mt-4 h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-              <div className={`h-full bg-gradient-to-r ${stat.color} rounded-full transition-all duration-100`} style={{ width: stat.change}}></div>
+              <div
+                className={`h-full bg-gradient-to-r ${stat.color} rounded-full transition-all duration-100`}
+                style={{ width: stat.change }}
+              ></div>
             </div>
           </div>
         );

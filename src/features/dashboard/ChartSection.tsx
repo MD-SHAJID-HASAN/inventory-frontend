@@ -2,8 +2,8 @@ import RevenueChart from "./RevenueChart";
 
 function ChartSection() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-        <div className="xl:col-span-2">
+    <div className="grid grid-cols-1">
+        <div className="grid md:grid-cols-2 gap-6">
             <RevenueChart></RevenueChart>
             <RevenueChart></RevenueChart>
         </div>

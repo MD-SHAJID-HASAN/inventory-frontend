@@ -7,7 +7,7 @@ import { useState } from "react";
 type CategoryFormData = {
   name: string;
   shopId: string;
-  allowedUnits: string[];
+  allowedUnits: { value: string }[];
   brandIds: string[];
   isActive: boolean;
   createdBy: string;
@@ -28,7 +28,7 @@ export default function AddCategoryForm() {
     defaultValues: {
       name: "",
       shopId: "",
-      allowedUnits: [""],
+      allowedUnits: [{ value: "" }],
       brandIds: [],
       isActive: true,
       createdBy: "",
@@ -36,13 +36,15 @@ export default function AddCategoryForm() {
   });
 
   // Field array for allowedUnits
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: "allowedUnits",
-  });
+const { fields, append, remove } = useFieldArray<CategoryFormData, "allowedUnits", string>({
+  control,
+  name: "allowedUnits",
+});
+
 
   const onSubmit = (data: CategoryFormData) => {
-    data.allowedUnits = data.allowedUnits.filter((u) => u.trim() !== "");
+    // Remove empty units before submitting
+    data.allowedUnits = data.allowedUnits.filter((u) => u.value.trim() !== "");
     post(data);
     console.log(data);
     alert("Category Added Successfully!");
@@ -92,9 +94,10 @@ export default function AddCategoryForm() {
           {fields.map((field, index) => (
             <div key={field.id} className="flex gap-2 items-center">
               <input
-                {...register(`allowedUnits.${index}`, { required: true })}
+                {...register(`allowedUnits.${index}.value` as const, { required: true })}
                 className="border p-2 rounded flex-1"
                 placeholder="e.g. kg, pcs"
+                defaultValue={field.value}
               />
               <button
                 type="button"
@@ -108,7 +111,7 @@ export default function AddCategoryForm() {
           ))}
           <button
             type="button"
-            onClick={() => append("")}
+            onClick={() => append({ value: "" })}
             className="bg-blue-500 text-white px-3 py-1 rounded"
           >
             + Add Unit
