@@ -155,7 +155,7 @@ export default function TransactionTableForm() {
                   });
                 },
               })}
-              className="border p-2 rounded"
+              className="w-full pl-2 pr-4 py-2.5 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-800 dark:text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
             >
               <option value="">-- Select Shop --</option>
               {(shops as any)?.data?.map((s: any) => (
@@ -180,7 +180,7 @@ export default function TransactionTableForm() {
             <input
               type="date"
               {...register("date")}
-              className="border p-2 rounded"
+              className="w-full pl-2 pr-4 py-2.5 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-800 dark:text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
             />
 
             <label>Customer/Supplier</label>
@@ -196,7 +196,7 @@ export default function TransactionTableForm() {
         {/* Items Table */}
         <h2 className="text-xl font-bold my-4">Add Transaction Items</h2>
         <table className="min-w-full border border-gray-300 text-sm">
-          <thead className="bg-gray-100">
+          <thead className="w-full pl-2 pr-4 py-2.5 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-800 dark:text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
             <tr>
               <th className="p-2 border">#</th>
               <th className="p-2 border">Category</th>

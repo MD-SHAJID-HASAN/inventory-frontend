@@ -1,6 +1,25 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <script>
+  try {
+    const saved = localStorage.getItem('dark-mode');
+    let dark;
+    if (saved === 'true') {
+      dark = true;
+    } else if (saved === 'false') {
+      dark = false;
+    } else {
+      dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    if (dark) {
+      document.documentElement.classList.add('dark');
+    }
+  } catch (e) {
+    console.error(e);
+  }
+</script>
+
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

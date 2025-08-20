@@ -9,6 +9,8 @@ import TransactionForm from "@/forms/TransactionForm";
 
 import AddCategoryForm from "@/forms/AddCategoryForm";
 
+
+
 function AppRoutes() {
   const router = createBrowserRouter([
     {
