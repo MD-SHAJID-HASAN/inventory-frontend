@@ -28,7 +28,7 @@ function HeaderU({ onToggle }: any) {
   return (
     <div
       className={`
-   bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200/50 dark:border-slate-700/50 px-6 py-4 h-23.25 flex flex-col justify-center`}
+   bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200/50 dark:border-slate-700/50 px-6 py-4 h-23.25 flex flex-col justify-center `}
     >
       <div className="flex items-center justify-between">
         {/* left section */}
@@ -80,7 +80,7 @@ function HeaderU({ onToggle }: any) {
 
             {/* Dropdown menu */}
             {open && (
-              <div className="absolute top-full mt-2 w-40 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-lg overflow-hidden z-50 flex flex-col">
+              <div className="absolute top-full mt-2 w-40 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-lg overflow-hidden flex flex-col">
                 {actions.map((action) => (
                   <Link to={`${action.href}`}
                     key={action.id}

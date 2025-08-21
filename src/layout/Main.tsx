@@ -24,9 +24,13 @@ function Main() {
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* ✅ Only shift the header */}
         <div
-          className="transition-[padding] duration-300 ease-in-out"
+          className="transition-[position] duration-300 ease-in-out z-50"
           style={{
-            paddingLeft: sidebarCollapsed ? "5rem" : "18rem",
+            
+            position: "fixed",
+            left: sidebarCollapsed ? "5rem" : "18rem",
+            right: 0,
+            top: 0,
           }}
         >
           <HeaderU
@@ -36,7 +40,7 @@ function Main() {
         </div>
 
         {/* ✅ Content stays full width (sidebar overlaps if expanded) */}
-        <div className="p-8 ml-20">
+        <div className="p-8 ml-20 mt-24">
           <Outlet />
         </div>
       </div>
