@@ -1,6 +1,7 @@
 import useDarkMode from "@/hooks/useDarkMode";
 import {
   Bell,
+  ChevronDown,
   Filter,
   Menu,
   Moon,
@@ -70,11 +71,11 @@ function HeaderU({ onToggle }: any) {
           {/* quick actions */}
           <div className="relative">
             {/* Main button */}
-            <button
+           <button
               onClick={() => setOpen(!open)}
-              className="hidden lg:flex items-center space-x-2 py-2 px-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl hover:shadow-lg transition-all"
+              className="flex lg:flex items-center space-x-2 py-2 px-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl hover:shadow-lg transition-all z-50"
             >
-              <Plus className="w-4 h-4" />
+              <ChevronDown className={`${open ? "rotate-180":""} transition-all duration-150 max-w-4 max-h-4`} />
               <span className="text-sm font-medium">New</span>
             </button>
 

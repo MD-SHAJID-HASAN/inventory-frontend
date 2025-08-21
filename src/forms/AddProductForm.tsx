@@ -109,7 +109,7 @@ export default function AddProductForm() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="min-w-4xl mx-auto p-6 border rounded space-y-4 bg-white dark:bg-slate-900 transition-colors"
+      className="max-w-4xl w-full mx-auto p-6 border rounded space-y-4 bg-white dark:bg-slate-900 transition-colors"
     >
       <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100">
         Create Product Model
@@ -200,8 +200,8 @@ export default function AddProductForm() {
       </div>
 
       {/* Has Variation */}
-      <div>
-        <label className="block font-medium text-slate-700 dark:text-slate-300">
+      <div className="text-slate-800 dark:text-slate-300">
+        <label className="block font-medium text-slate-700 dark:text-slate-300 ">
           Has Variation?
         </label>
         <input
@@ -214,20 +214,23 @@ export default function AddProductForm() {
 
       {/* Sizes (only if hasVariation) */}
       {hasVariation && (
-        <div>
+        <div className="">
           <label className="font-medium text-slate-700 dark:text-slate-300">
             Sizes & Stock *
           </label>
           {fields.map((field, index) => (
-            <div key={field.id} className="flex gap-2 mb-2">
+            <div
+              key={field.id}
+              className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-2 mb-2"
+            >
               <input
                 {...register(`sizes.${index}.size`, { required: true })}
-                className="border p-2 rounded w-1/4 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100"
+                className="border p-2 rounded bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100"
                 placeholder="Size"
               />
               <input
                 {...register(`sizes.${index}.sizeUnit`, { required: true })}
-                className="border p-2 rounded w-1/4 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100"
+                className="border p-2 rounded bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100"
                 placeholder="Unit (cm, inch)"
               />
               <input
@@ -237,7 +240,7 @@ export default function AddProductForm() {
                   required: true,
                   min: 0,
                 })}
-                className="border p-2 rounded w-1/4 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100"
+                className="border p-2 rounded bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100"
                 placeholder="Stock"
               />
               <input
@@ -247,7 +250,7 @@ export default function AddProductForm() {
                   required: true,
                   min: 0,
                 })}
-                className="border p-2 rounded w-1/4 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100"
+                className="border p-2 rounded bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100"
                 placeholder="Purchase Price"
               />
               <button
@@ -280,34 +283,38 @@ export default function AddProductForm() {
       )}
 
       {!hasVariation && (
-        <div>
-          <label className="block font-medium text-slate-700 dark:text-slate-300">
-            Purchase Price
-          </label>
-          <input
-            type="number"
-            {...register("purchasePrice", {
-              valueAsNumber: true,
-              required: true,
-              min: 0,
-            })}
-            className="border p-2 rounded w-1/4 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100"
-            placeholder="Purchase Price"
-          />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label className="block font-medium text-slate-700 dark:text-slate-300">
+              Purchase Price
+            </label>
+            <input
+              type="number"
+              {...register("purchasePrice", {
+                valueAsNumber: true,
+                required: true,
+                min: 0,
+              })}
+              className="border p-2 rounded w-full bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100"
+              placeholder="Purchase Price"
+            />
+          </div>
 
-          <label className="block font-medium text-slate-700 dark:text-slate-300">
-            Stock
-          </label>
-          <input
-            type="number"
-            {...register(`totalStock`, {
-              valueAsNumber: true,
-              required: true,
-              min: 0,
-            })}
-            className="border p-2 rounded w-1/4 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100"
-            placeholder="Stock"
-          />
+          <div>
+            <label className="block font-medium text-slate-700 dark:text-slate-300">
+              Stock
+            </label>
+            <input
+              type="number"
+              {...register(`totalStock`, {
+                valueAsNumber: true,
+                required: true,
+                min: 0,
+              })}
+              className="border p-2 rounded w-full bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100"
+              placeholder="Stock"
+            />
+          </div>
         </div>
       )}
 
@@ -315,7 +322,7 @@ export default function AddProductForm() {
       <div className="pt-4">
         <button
           type="submit"
-          className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded transition-colors"
+          className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded transition-colors w-full sm:w-auto"
         >
           Submit
         </button>

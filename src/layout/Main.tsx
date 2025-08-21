@@ -24,7 +24,7 @@ function Main() {
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* ✅ Only shift the header */}
         <div
-          className="transition-[position] duration-300 ease-in-out z-50"
+          className="transition-[all] duration-300 ease-in-out z-50"
           style={{
             
             position: "fixed",
