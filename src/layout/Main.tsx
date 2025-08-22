@@ -11,7 +11,7 @@ function Main() {
   return (
     <div className="flex relative">
       {/* Sidebar */}
-      <div className={`${sidebarCollapsed ? "md:block" : ""}`}>
+      <div className={`${sidebarCollapsed ? "md:block  md:opacity-100  opacity-0 transition-opacity ease-in duration-200" : ""}`}>
         <SidebarU
           collapsed={sidebarCollapsed}
           onToggle={() => setSidebarCollapsed(!sidebarCollapsed)}
