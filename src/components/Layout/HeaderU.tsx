@@ -5,13 +5,12 @@ import {
   Filter,
   Menu,
   Moon,
-  Plus,
   Search,
   Settings,
   Sun,
 } from "lucide-react";
 import { useState } from "react";
-import {Link, useParams } from "react-router-dom";
+import {Link,} from "react-router-dom";
 
 function HeaderU({ onToggle }: any) {
   const [open, setOpen] = useState(false);
@@ -23,8 +22,6 @@ function HeaderU({ onToggle }: any) {
     { id: "brand" , href: "/brand-form", label: "Brand" },
   ];
 
-  const params = useParams();
-  console.log(params.id);
   const [darkMode, setDarkMode] = useDarkMode();
   return (
     <div
@@ -43,7 +40,7 @@ function HeaderU({ onToggle }: any) {
 
           <div className="hidden md:block">
             <h1 className="text-2xl font-black text-slate-800 dark:text-white">
-              {params.label}
+              {"Dashboard"}
             </h1>
             <p className="hidden">
               Welcome back, Shajid! here's what's happening today!
@@ -100,7 +97,7 @@ function HeaderU({ onToggle }: any) {
 
           {/* dark-light toggle */}
           <button
-            className="p-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors hidden"
+            className="p-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
             onClick={() => setDarkMode(!darkMode)}
           >
             {darkMode ? (

@@ -82,7 +82,7 @@ function SidebarU({ collapsed, onPageChange, currentPage}: any) {
       <div
         className={`${
           collapsed ? "w-20" : "w-72"
-        } transition-[width] duration-300 ease-in-out bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-r border-slate-200/50 dark:border-slate-700/50 flex flex-col fixed top-0 left-0 z-20 min-h-screen`}
+        } transition-[width] duration-300 ease-in-out bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-r border-slate-200/50 dark:border-slate-700/50 flex flex-col fixed top-0 left-0 z-20 min-h-screen `}
       >
         {/* logo */}
         <div
@@ -94,7 +94,7 @@ function SidebarU({ collapsed, onPageChange, currentPage}: any) {
             <div
               className={`${
                 collapsed ? "bg-red-500 m-0" : ""
-              } min-w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center`}
+              } w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center`}
             >
               <Package className="w-6 h-6 text-white" />
             </div>
