@@ -137,7 +137,7 @@ export default function TransactionTableForm() {
         className="max-w-5xl mx-auto mt-10 px-2 sm:px-4"
       >
         {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between gap-6">
+        <div className="flex flex-col md:flex-row justify-between gap-6 dark:text-white">
           <div className="flex flex-col gap-2 w-full">
             <label>Shop</label>
             <select
@@ -193,7 +193,7 @@ export default function TransactionTableForm() {
         </div>
 
         {/* Items Table */}
-        <h2 className="text-xl font-bold my-4">Add Transaction Items</h2>
+        <h2 className="text-xl font-bold my-4 dark:text-white">Add Transaction Items</h2>
 
         <div className="overflow-x-auto">
           <table className="min-w-full border border-gray-300 text-sm">
@@ -210,7 +210,7 @@ export default function TransactionTableForm() {
                 <th className="p-2 border">Action</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="dark:text-white">
               {fields.map((field, index) => {
                 const row = items[index];
                 const total = (row.quantity || 0) * (row.unitPrice || 0);

@@ -6,7 +6,7 @@ import { Outlet } from "react-router-dom";
 
 function Main() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(true);
-  const [currentPage, setCurrentPage] = useState("dashboard");
+  const [currentPage, setCurrentPage] = useState("");
 
   return (
     <div className="flex relative">
