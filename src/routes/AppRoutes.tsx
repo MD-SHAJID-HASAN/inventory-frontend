@@ -16,7 +16,7 @@ function AppRoutes() {
       path: "/",
       element: <Main></Main>,
       children: [
-        { path: "/", element: <Home></Home> },
+        { path: "/", element: <DashboardPage></DashboardPage> },
         { path: "/dashboard", element: <DashboardPage></DashboardPage> },
         {
           path: "/shops",
