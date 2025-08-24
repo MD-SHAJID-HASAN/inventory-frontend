@@ -22,6 +22,7 @@ type FormData = {
   date: string;
   party: string;
   items: Item[];
+  total: number;
   createdBy: string;
 };
 
@@ -54,6 +55,7 @@ export default function TransactionTableForm() {
             unitPrice: 0,
           },
         ],
+        total: 0,
       },
     });
 
@@ -101,23 +103,31 @@ export default function TransactionTableForm() {
 
   const { post } = usePostData(`/transactions`);
 
-  const onSubmit = (data: FormData) => {
-    const payload = {
-      shopId: data.shopId,
-      party: data.party || "N/A",
-      transactionType: data.transactionType,
-      createdBy: data.createdBy,
-      items: data.items.map((i) => ({
-        ProductModelId: i.productModel,
-        size: i.size || "",
-        sizeUnit: i.sizeUnit || "",
-        quantity: i.quantity,
-        unitPrice: i.unitPrice,
-      })),
-    };
-    console.log("Payload to send:", payload);
-    post(payload);
+const onSubmit = (data: FormData) => {
+  const payload = {
+    shopId: data.shopId,
+    party: data.party || "N/A",
+    transactionType: data.transactionType,
+    createdBy: data.createdBy,
+    items: data.items.map((i) => ({
+      ProductModelId: i.productModel,
+      size: i.size || "",
+      sizeUnit: i.sizeUnit || "",
+      quantity: i.quantity,
+      unitPrice: i.unitPrice,
+    })),
+    total: data.items
+      ?.reduce(
+        (sum, i) => sum + (i.quantity || 0) * (i.unitPrice || 0),
+        0
+      )
+      .toFixed(2),
   };
+
+  console.log("Payload to send:", payload);
+  post(payload);
+};
+
 
   if (shopsLoading) return <p>Loading shops...</p>;
   if (shopsError) return <p>Error loading shops.</p>;
