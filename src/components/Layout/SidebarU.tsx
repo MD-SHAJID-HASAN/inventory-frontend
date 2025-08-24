@@ -2,11 +2,12 @@ import {
   BarChart3,
   ChevronDown,
   LayoutDashboard,
+  List,
   Package,
   Store,
 } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const menuItems = [
   {
@@ -45,10 +46,11 @@ const menuItems = [
     count: 100,
     active: false,
   },
+
   {
     id: "category",
     href: "/categories",
-    icon: Store,
+    icon: List,
     label: "Categories",
     active: false,
     count: 13,
@@ -65,6 +67,9 @@ const menuItems = [
 
 function SidebarU({ collapsed, onPageChange, currentPage}: any) {
   const [expandedItems, setExpandedItems] = useState(new Set([""]));
+
+  const location = useLocation()
+  console.log("location is:", location);
 
   const toggleExpanded = (itemId: string) => {
     const newExpanded = new Set(expandedItems);
@@ -90,6 +95,7 @@ function SidebarU({ collapsed, onPageChange, currentPage}: any) {
             collapsed ? "flex items-center justify-center" : ""
           } p-6 border-b border-slate-200/50 dark:border-slate-700/50 h-23.25 flex`}
         >
+          
           <div className="flex items-center space-x-3">
             <div
               className={`${
@@ -120,7 +126,7 @@ function SidebarU({ collapsed, onPageChange, currentPage}: any) {
               <Link
                 to={`${item.href}`}
                 className={`w-full flex items-center justify-between p-3 rounded-xl transition-all duration-200 ${
-                  currentPage == item.id
+                  location.pathname == item.href
                     ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg shadow-blue-500/25"
                     : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/50"
                 }`}
@@ -129,6 +135,7 @@ function SidebarU({ collapsed, onPageChange, currentPage}: any) {
                     toggleExpanded(item.id);
                   } else {
                     onPageChange(item.id);
+                    collapsed(true)
                   }
                 }}
               >

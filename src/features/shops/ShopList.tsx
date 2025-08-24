@@ -4,6 +4,7 @@ import useFetchData from "../../hooks/useFetchData";
 import type { Shop } from "@/types";
 import { Link } from "react-router-dom";
 import BrandManager from "@/forms/AddBrandForm";
+import PageWrapper from "@/components/PageWrapper/PageWrapper";
 
 function ShopList() {
   const { data, error, loading } = useFetchData<Shop[]>("/shops");
@@ -19,7 +20,8 @@ function ShopList() {
   console.log(data, error);
 
   return (
-    <div className="flex flex-wrap gap-3">
+    <PageWrapper btnText="Add New" href="#" pageTitle="Your Shops" clickHandler={()=>{}}>
+      <div className="flex flex-wrap gap-3">
       {data &&
         shops.map((item: any) => {
           return <ShopCard key={item.id} shop={item}></ShopCard>;
@@ -71,6 +73,7 @@ function ShopList() {
         </Link>
       </div>
     </div>
+    </PageWrapper>
   );
 }
 

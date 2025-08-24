@@ -1,6 +1,6 @@
 // Main.tsx
-import HeaderU from "@/components/Layout/HeaderU";
-import SidebarU from "@/components/Layout/SidebarU";
+import HeaderU from "@/components/layout/HeaderU";
+import SidebarU from "@/components/layout/SidebarU";
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
 
