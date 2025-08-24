@@ -34,7 +34,7 @@ function PageWrapper({
           <span className="text-sm font-medium">Go Back</span>
         </button>
         <h2 className="dark:text-white text-2xl font-black">{pageTitle}</h2>
-        <AddButton href={href} btnText={btnText}></AddButton>
+        <AddButton  href={`${btnText.length <= 2 ? "/" : href}`} btnText={`${btnText.length <= 2 ? "Home" : btnText}`}></AddButton>
       </div>
 
       {children}

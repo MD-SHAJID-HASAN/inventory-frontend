@@ -1,4 +1,5 @@
 import {
+  BadgeDollarSign,
   BarChart3,
   ChevronDown,
   LayoutDashboard,
@@ -58,7 +59,7 @@ const menuItems = [
   {
     id: "transaction",
     href: "/transactions",
-    icon: Store,
+    icon: BadgeDollarSign,
     label: "Transactions",
     active: false,
     badge: "New",

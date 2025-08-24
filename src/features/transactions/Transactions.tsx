@@ -10,7 +10,7 @@ function Transactions() {
   return (
     <PageWrapper btnText="New Transaction" href="/transaction-form" pageTitle="Transaction Table" >
         <div>
-
+            {}
         </div>
     </PageWrapper>
   )
