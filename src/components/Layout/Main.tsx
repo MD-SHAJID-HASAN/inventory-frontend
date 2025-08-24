@@ -1,6 +1,6 @@
 // Main.tsx
-import HeaderU from "@/components/layout/HeaderU";
-import SidebarU from "@/components/layout/SidebarU";
+import HeaderU from "@/components/Layout/HeaderU";
+import SidebarU from "@/components/Layout/SidebarU";
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
 
@@ -10,7 +10,7 @@ function Main() {
 
   return (
     <div className="flex relative">
-      {/* Sidebar */}
+      {/* Sidebar component */}
       <div className={`${sidebarCollapsed ? "md:block  md:opacity-100  opacity-0 transition-opacity ease-in duration-200" : ""}`}>
         <SidebarU
           collapsed={sidebarCollapsed}
