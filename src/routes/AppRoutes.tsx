@@ -2,7 +2,7 @@ import AddProductForm from "@/forms/AddProductForm";
 import ProductCategory from "../features/category/ProductCategory";
 import Products from "../features/products/Products";
 import ShopList from "../features/shops/ShopList";
-import Main from "../components/layout/Main"
+import Main from "../components/layout/Main.tsx"
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import TransactionForm from "@/forms/TransactionForm";
 import AddCategoryForm from "@/forms/AddCategoryForm";
