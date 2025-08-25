@@ -20,7 +20,7 @@ function ShopList() {
   console.log(data, error);
 
   return (
-    <PageWrapper btnText="Add New" href="#" pageTitle="Your Shops">
+    <PageWrapper btnText="New Shop" href="#" pageTitle="Your Shops">
       <div className="flex flex-wrap gap-3">
       {data &&
         shops.map((item: any) => {

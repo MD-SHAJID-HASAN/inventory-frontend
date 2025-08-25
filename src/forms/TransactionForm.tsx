@@ -3,6 +3,7 @@ import useFetchData from "@/hooks/useFetchData";
 import { useForm, useFieldArray } from "react-hook-form";
 import { API_URL } from "@/config";
 import usePostData from "@/hooks/usePostData";
+import { Delete } from "lucide-react";
 
 type Item = {
   category: string;
@@ -27,9 +28,7 @@ type FormData = {
 };
 
 export default function TransactionTableForm() {
-  const [productModelsCache, setProductModelsCache] = useState<
-    Record<string, any[]>
-  >({});
+  const [productModelsCache, setProductModelsCache] = useState<Record<string, any[]>>({});
 
   // Fetch all shops
   const {
@@ -45,7 +44,7 @@ export default function TransactionTableForm() {
         transactionType: "incoming",
         date: "",
         party: "",
-        createdBy: "Admin", // TODO: replace with logged-in user
+        createdBy: "Admin",
         items: [
           {
             category: "",
@@ -60,7 +59,6 @@ export default function TransactionTableForm() {
     });
 
   const watchShopId = watch("shopId");
-  // Fetch categories for a given shop
   const { data: categories } = useFetchData<any[]>(
     watchShopId ? `/categories/shop/${watchShopId}` : ""
   );
@@ -71,63 +69,30 @@ export default function TransactionTableForm() {
   });
 
   const items = watch("items");
-  // const watchShopId = watch("shopId");
-
-  // Row-specific product model fetching
-  // useEffect(() => {
-
-  //   console.log('UseEffect is running now.')
-  //   items.forEach((row) => {
-  //     if (row.category && row.brand) {
-  //       const key = `${row.category}-${row.brand}`;
-  //       console.log('key...', key)
-  //       if (!productModelsCache[key]) {
-  //         console.log('Category and Brand!',row.category, row.brand)
-  //         fetch(`${API_URL}/productModels/${row.category}/${row.brand}`)
-  //           .then((res) => res.json())
-  //           .then((data) => {
-  //             console.log('data', data)
-  //             setProductModelsCache((prev) => ({
-  //               ...prev,
-  //               [key]: data?.data || [],
-
-  //             }));
-  //           })
-  //           .catch((err) => {
-  //             console.error("Error fetching product models:", err);
-  //           });
-  //       }
-  //     }
-  //   });
-  // }, [items, productModelsCache]);
 
   const { post } = usePostData(`/transactions`);
 
-const onSubmit = (data: FormData) => {
-  const payload = {
-    shopId: data.shopId,
-    party: data.party || "N/A",
-    transactionType: data.transactionType,
-    createdBy: data.createdBy,
-    items: data.items.map((i) => ({
-      ProductModelId: i.productModel,
-      size: i.size || "",
-      sizeUnit: i.sizeUnit || "",
-      quantity: i.quantity,
-      unitPrice: i.unitPrice,
-    })),
-    total: data.items
-      ?.reduce(
-        (sum, i) => sum + (i.quantity || 0) * (i.unitPrice || 0),
-        0
-      )
-      .toFixed(2),
+  const onSubmit = (data: FormData) => {
+    const payload = {
+      shopId: data.shopId,
+      party: data.party || "N/A",
+      transactionType: data.transactionType,
+      createdBy: data.createdBy,
+      items: data.items.map((i) => ({
+        ProductModelId: i.productModel,
+        size: i.size || "",
+        sizeUnit: i.sizeUnit || "",
+        quantity: i.quantity,
+        unitPrice: i.unitPrice,
+      })),
+      total: data.items
+        ?.reduce((sum, i) => sum + (i.quantity || 0) * (i.unitPrice || 0), 0)
+        .toFixed(2),
+    };
+
+    console.log("Payload to send to:", payload);
+    post(payload);
   };
-
-  console.log("Payload to send to:", payload);
-  post(payload);
-};
-
 
   if (shopsLoading) return <p>Loading shops...</p>;
   if (shopsError) return <p>Error loading shops.</p>;
@@ -140,12 +105,19 @@ const onSubmit = (data: FormData) => {
     unitPrice: 0,
   };
 
+  // --- Styles ---
+  const inputClass =
+    "w-full p-2 bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-800 dark:text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all";
+  const selectClass = `${inputClass}`;
+  const tableInputClass = "w-full p-1 border border-slate-300 rounded text-slate-800 dark:text-white bg-slate-800";
+  const buttonClass = "px-4 py-2 rounded text-white transition-all";
+  const addButtonClass = "bg-blue-600 hover:bg-blue-700 " + buttonClass;
+  const submitButtonClass = "bg-green-600 hover:bg-green-700 " + buttonClass;
+  const removeButtonClass = "text-red-600 text-center";
+
   return (
     <div>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="max-w-5xl mx-auto mt-10 px-2 sm:px-4"
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className="max-w-5xl mx-auto mt-10 px-2 sm:px-4">
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between gap-6 dark:text-white">
           <div className="flex flex-col gap-2 w-full">
@@ -164,7 +136,7 @@ const onSubmit = (data: FormData) => {
                   });
                 },
               })}
-              className="w-full pl-2 pr-4 py-2.5 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-800 dark:text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+              className={selectClass}
             >
               <option value="">-- Select Shop --</option>
               {(shops as any)?.data?.map((s: any) => (
@@ -175,10 +147,7 @@ const onSubmit = (data: FormData) => {
             </select>
 
             <label>Transaction Type</label>
-            <select
-              {...register("transactionType")}
-              className="border p-2 rounded"
-            >
+            <select {...register("transactionType")} className={selectClass}>
               <option value="incoming">Incoming</option>
               <option value="outgoing">Outgoing</option>
             </select>
@@ -186,25 +155,15 @@ const onSubmit = (data: FormData) => {
 
           <div className="flex flex-col gap-2 w-full">
             <label>Date</label>
-            <input
-              type="date"
-              {...register("date")}
-              className="w-full pl-2 pr-4 py-2.5 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-800 dark:text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-            />
+            <input type="date" {...register("date")} className={inputClass} />
 
             <label>Customer/Supplier</label>
-            <input
-              type="text"
-              {...register("party")}
-              placeholder="Name"
-              className="border p-2 rounded"
-            />
+            <input type="text" {...register("party")} placeholder="Name" className={inputClass} />
           </div>
         </div>
 
         {/* Items Table */}
         <h2 className="text-xl font-bold my-4 dark:text-white">Add Transaction Items</h2>
-
         <div className="overflow-x-auto">
           <table className="min-w-full border border-gray-300 text-sm">
             <thead className="bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-white">
@@ -224,25 +183,21 @@ const onSubmit = (data: FormData) => {
               {fields.map((field, index) => {
                 const row = items[index];
                 const total = (row.quantity || 0) * (row.unitPrice || 0);
-
                 const brandsForRow =
-                  (categories as any)?.data?.find(
-                    (c: any) => c._id === row?.category
-                  )?.brandIds || [];
-
+                  (categories as any)?.data?.find((c: any) => c._id === row?.category)
+                    ?.brandIds || [];
                 const productModelsForRow =
                   productModelsCache[`${row.category}-${row.brand}`] || [];
-
                 const selectedProduct = productModelsForRow.find(
                   (pm: any) => pm._id === row?.productModel
                 );
 
                 return (
                   <tr key={field.id}>
-                    <td className="p-2 border text-center">{index + 1}</td>
+                    <td className="p-2 text-center flex items-center justify-center ">{index + 1}</td>
 
                     {/* Category */}
-                    <td className="p-2 border">
+                    <td className={`p-2 border`}>
                       <select
                         {...register(`items.${index}.category`, {
                           onChange: () => {
@@ -250,7 +205,7 @@ const onSubmit = (data: FormData) => {
                             setValue(`items.${index}.productModel`, "");
                           },
                         })}
-                        className="w-full p-1 border rounded"
+                        className={tableInputClass}
                         disabled={!watchShopId}
                       >
                         <option value="">Select Category</option>
@@ -269,15 +224,11 @@ const onSubmit = (data: FormData) => {
                           onChange: (e) => {
                             const value = e.target.value;
                             setValue(`items.${index}.productModel`, "");
-                            const category = getValues(
-                              `items.${index}.category`
-                            );
+                            const category = getValues(`items.${index}.category`);
                             if (category && value) {
                               const key = `${category}-${value}`;
                               if (!productModelsCache[key]) {
-                                fetch(
-                                  `${API_URL}/productModels/${category}/${value}`
-                                )
+                                fetch(`${API_URL}/productModels/${category}/${value}`)
                                   .then((res) => res.json())
                                   .then((data) => {
                                     setProductModelsCache((prev) => ({
@@ -285,12 +236,11 @@ const onSubmit = (data: FormData) => {
                                       [key]: data?.data || [],
                                     }));
                                   });
-                                console.log(productModelsCache);
                               }
                             }
                           },
                         })}
-                        className="w-full p-1 border rounded"
+                        className={tableInputClass}
                         disabled={!brandsForRow.length}
                       >
                         <option value="">Select Brand</option>
@@ -308,20 +258,15 @@ const onSubmit = (data: FormData) => {
                         {...register(`items.${index}.productModel`, {
                           onChange: (e) => {
                             const value = e.target.value;
-                            const pm = productModelsForRow.find(
-                              (p: any) => p._id === value
-                            );
-                            setValue(
-                              `items.${index}.hasVariation`,
-                              pm?.hasVariation || false
-                            );
+                            const pm = productModelsForRow.find((p: any) => p._id === value);
+                            setValue(`items.${index}.hasVariation`, pm?.hasVariation || false);
                             if (!pm?.hasVariation) {
                               setValue(`items.${index}.size`, "");
                               setValue(`items.${index}.sizeUnit`, "");
                             }
                           },
                         })}
-                        className="w-full p-1 border rounded"
+                        className={tableInputClass}
                         disabled={!productModelsForRow.length}
                       >
                         <option value="">Select Product</option>
@@ -336,10 +281,7 @@ const onSubmit = (data: FormData) => {
                     {/* Size */}
                     <td className="p-2 border">
                       {selectedProduct?.hasVariation ? (
-                        <select
-                          {...register(`items.${index}.size`)}
-                          className="w-full p-1 border rounded"
-                        >
+                        <select {...register(`items.${index}.size`)} className={tableInputClass}>
                           <option value="">Select Size</option>
                           {selectedProduct?.sizes?.map((sz: any) => (
                             <option key={sz.size} value={sz.size}>
@@ -356,10 +298,8 @@ const onSubmit = (data: FormData) => {
                     <td className="p-2 border">
                       <input
                         type="number"
-                        {...register(`items.${index}.quantity`, {
-                          valueAsNumber: true,
-                        })}
-                        className="w-full p-1 border rounded"
+                        {...register(`items.${index}.quantity`, { valueAsNumber: true })}
+                        className={tableInputClass}
                       />
                     </td>
 
@@ -367,26 +307,18 @@ const onSubmit = (data: FormData) => {
                     <td className="p-2 border">
                       <input
                         type="number"
-                        {...register(`items.${index}.unitPrice`, {
-                          valueAsNumber: true,
-                        })}
-                        className="w-full p-1 border rounded"
+                        {...register(`items.${index}.unitPrice`, { valueAsNumber: true })}
+                        className={tableInputClass}
                       />
                     </td>
 
                     {/* Total */}
-                    <td className="p-2 border text-right font-medium">
-                      {total.toFixed(2)}
-                    </td>
+                    <td className="p-2 border text-right font-medium">{total.toFixed(2)}</td>
 
                     {/* Remove */}
-                    <td className="p-2 border text-center">
-                      <button
-                        type="button"
-                        onClick={() => remove(index)}
-                        className="text-red-600 hover:underline"
-                      >
-                        Remove
+                    <td className="text-center">
+                      <button type="button" onClick={() => remove(index)} className={`${removeButtonClass}`}>
+                        <Delete></Delete>
                       </button>
                     </td>
                   </tr>
@@ -400,10 +332,7 @@ const onSubmit = (data: FormData) => {
                 </td>
                 <td className="text-right p-2 border font-bold">
                   {items
-                    ?.reduce(
-                      (sum, i) => sum + (i.quantity || 0) * (i.unitPrice || 0),
-                      0
-                    )
+                    ?.reduce((sum, i) => sum + (i.quantity || 0) * (i.unitPrice || 0), 0)
                     .toFixed(2)}
                 </td>
               </tr>
@@ -413,17 +342,10 @@ const onSubmit = (data: FormData) => {
 
         {/* Buttons */}
         <div className="mt-4 flex flex-col sm:flex-row justify-between gap-4">
-          <button
-            type="button"
-            onClick={() => append(initialItem)}
-            className="w-full sm:w-auto px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-          >
+          <button type="button" onClick={() => append(initialItem)} className={addButtonClass}>
             + Add Row
           </button>
-          <button
-            type="submit"
-            className="w-full sm:w-auto px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700"
-          >
+          <button type="submit" className={submitButtonClass}>
             Submit
           </button>
         </div>
