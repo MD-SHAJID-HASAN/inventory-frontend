@@ -8,7 +8,7 @@ import AddCategoryForm from "@/forms/AddCategoryForm";
 import DashboardPage from "@/features/dashboard/DashboardPage";
 import Transactions from "@/features/transactions/Transactions";
 import Categories from "@/features/category/Categories";
-import Main from "@/components/layout/Main";
+import Main from "@/components/Layout/Main";
 
 function AppRoutes() {
   const router = createBrowserRouter([
