@@ -124,7 +124,7 @@ const onSubmit = (data: FormData) => {
       .toFixed(2),
   };
 
-  console.log("Payload to send:", payload);
+  console.log("Payload to send to:", payload);
   post(payload);
 };
 
