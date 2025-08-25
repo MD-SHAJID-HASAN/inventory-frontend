@@ -1,8 +1,23 @@
+// --- Styles ---
+const inputClass =
+  "w-full p-2 bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-800 dark:text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all";
+const selectClass = `${inputClass}`;
+const tableInputClass =
+  "w-full p-1 border border-slate-300 rounded text-slate-800 dark:text-white bg-slate-800";
+const buttonClass =
+  "px-4 py-2 rounded text-white transition-all";
+const addButtonClass =
+  "bg-blue-600 hover:bg-blue-700 " + buttonClass;
+const submitButtonClass =
+  "bg-green-600 hover:bg-green-700 " + buttonClass;
+const removeButtonClass = "bg-red-600 hover:bg-red-700 text-white px-2 rounded";
+
 import { useForm, useFieldArray } from "react-hook-form";
 import useFetchData from "@/hooks/useFetchData";
 import usePostData from "@/hooks/usePostData";
 import type { Brand, Category, Shop } from "@/types";
 import { useState } from "react";
+import PageWrapper from "@/components/PageWrapper/PageWrapper";
 
 type SizeData = {
   size: string;
@@ -31,7 +46,6 @@ type ProductModelFormData = {
 export default function AddProductForm() {
   const [shopId, setShopId] = useState("");
 
-  // Fetch data
   const { data: shops } = useFetchData<any[]>("/shops");
   const { data: categories } = useFetchData<any[]>(
     shopId ? `/categories/shop/${shopId}` : ""
@@ -107,13 +121,11 @@ export default function AddProductForm() {
   };
 
   return (
-    <form
+   <PageWrapper btnText="" pageTitle="New Product Model" href="">
+     <form
       onSubmit={handleSubmit(onSubmit)}
       className="max-w-4xl w-full mx-auto p-6 border rounded space-y-4 bg-white dark:bg-slate-900 transition-colors"
     >
-      <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100">
-        Create Product Model
-      </h1>
 
       {/* Shop */}
       <div>
@@ -122,7 +134,7 @@ export default function AddProductForm() {
         </label>
         <select
           {...register("shopId", { required: true })}
-          className="border p-2 rounded w-full bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100"
+          className={selectClass}
           onChange={(e) => {
             setShopId(e.target.value);
             setValue("categoryId", "");
@@ -145,7 +157,7 @@ export default function AddProductForm() {
         </label>
         <select
           {...register("categoryId")}
-          className="border p-2 rounded w-full bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100"
+          className={selectClass}
           disabled={!shopId}
         >
           <option value="">Select Category</option>
@@ -164,7 +176,7 @@ export default function AddProductForm() {
         </label>
         <select
           {...register("brandId", { required: true })}
-          className="border p-2 rounded w-full bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100"
+          className={selectClass}
           disabled={!shopId}
         >
           <option value="">Select Brand</option>
@@ -183,7 +195,7 @@ export default function AddProductForm() {
         </label>
         <input
           {...register("unit", { required: true })}
-          className="border p-2 rounded w-full bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100"
+          className={inputClass}
           placeholder="e.g. kg, pcs"
         />
       </div>
@@ -195,13 +207,13 @@ export default function AddProductForm() {
         </label>
         <input
           {...register("name", { required: true })}
-          className="border p-2 rounded w-full bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100"
+          className={inputClass}
         />
       </div>
 
       {/* Has Variation */}
       <div className="text-slate-800 dark:text-slate-300">
-        <label className="block font-medium text-slate-700 dark:text-slate-300 ">
+        <label className="block font-medium text-slate-700 dark:text-slate-300">
           Has Variation?
         </label>
         <input
@@ -214,7 +226,7 @@ export default function AddProductForm() {
 
       {/* Sizes (only if hasVariation) */}
       {hasVariation && (
-        <div className="">
+        <div>
           <label className="font-medium text-slate-700 dark:text-slate-300">
             Sizes & Stock *
           </label>
@@ -223,44 +235,66 @@ export default function AddProductForm() {
               key={field.id}
               className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-2 mb-2"
             >
-              <input
-                {...register(`sizes.${index}.size`, { required: true })}
-                className="border p-2 rounded bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100"
-                placeholder="Size"
-              />
-              <input
-                {...register(`sizes.${index}.sizeUnit`, { required: true })}
-                className="border p-2 rounded bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100"
-                placeholder="Unit (cm, inch)"
-              />
-              <input
-                type="number"
-                {...register(`sizes.${index}.currentStock`, {
-                  valueAsNumber: true,
-                  required: true,
-                  min: 0,
-                })}
-                className="border p-2 rounded bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100"
-                placeholder="Stock"
-              />
-              <input
-                type="number"
-                {...register(`sizes.${index}.purchasePrice`, {
-                  valueAsNumber: true,
-                  required: true,
-                  min: 0,
-                })}
-                className="border p-2 rounded bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100"
-                placeholder="Purchase Price"
-              />
-              <button
-                type="button"
-                onClick={() => remove(index)}
-                className="bg-red-500 text-white px-2 rounded"
-                disabled={fields.length === 1}
-              >
-                X
-              </button>
+              <div>
+                <label className="block text-sm text-slate-600 dark:text-slate-400">
+                  Size
+                </label>
+                <input
+                  {...register(`sizes.${index}.size`, { required: true })}
+                  className={inputClass}
+                  placeholder="Size"
+                />
+              </div>
+              <div>
+                <label className="block text-sm text-slate-600 dark:text-slate-400">
+                  Size Unit
+                </label>
+                <input
+                  {...register(`sizes.${index}.sizeUnit`, { required: true })}
+                  className={inputClass}
+                  placeholder="Unit (cm, inch)"
+                />
+              </div>
+              <div>
+                <label className="block text-sm text-slate-600 dark:text-slate-400">
+                  Stock
+                </label>
+                <input
+                  type="number"
+                  {...register(`sizes.${index}.currentStock`, {
+                    valueAsNumber: true,
+                    required: true,
+                    min: 0,
+                  })}
+                  className={inputClass}
+                  placeholder="Stock"
+                />
+              </div>
+              <div>
+                <label className="block text-sm text-slate-600 dark:text-slate-400">
+                  Purchase Price
+                </label>
+                <input
+                  type="number"
+                  {...register(`sizes.${index}.purchasePrice`, {
+                    valueAsNumber: true,
+                    required: true,
+                    min: 0,
+                  })}
+                  className={inputClass}
+                  placeholder="Purchase Price"
+                />
+              </div>
+              <div className="flex items-end">
+                <button
+                  type="button"
+                  onClick={() => remove(index)}
+                  className={removeButtonClass}
+                  disabled={fields.length === 1}
+                >
+                  X
+                </button>
+              </div>
             </div>
           ))}
 
@@ -275,7 +309,7 @@ export default function AddProductForm() {
                 averageCost: 0,
               })
             }
-            className="bg-blue-500 text-white px-3 py-1 rounded"
+            className={addButtonClass}
           >
             + Add Size
           </button>
@@ -295,7 +329,7 @@ export default function AddProductForm() {
                 required: true,
                 min: 0,
               })}
-              className="border p-2 rounded w-full bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100"
+              className={inputClass}
               placeholder="Purchase Price"
             />
           </div>
@@ -311,7 +345,7 @@ export default function AddProductForm() {
                 required: true,
                 min: 0,
               })}
-              className="border p-2 rounded w-full bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100"
+              className={inputClass}
               placeholder="Stock"
             />
           </div>
@@ -320,13 +354,11 @@ export default function AddProductForm() {
 
       {/* Submit */}
       <div className="pt-4">
-        <button
-          type="submit"
-          className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded transition-colors w-full sm:w-auto"
-        >
+        <button type="submit" className={submitButtonClass}>
           Submit
         </button>
       </div>
     </form>
+   </PageWrapper>
   );
 }
