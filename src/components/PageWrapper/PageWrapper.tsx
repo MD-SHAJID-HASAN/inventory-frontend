@@ -37,7 +37,7 @@ function PageWrapper({
           {pageTitle}
         </h2>
         <AddButton
-          href={`${btnText.length <= 2 ? "/" : href}`}
+          href={`${btnText.length <= 1 ? "/" : href}`}
           btnText={`${btnText.length <= 2 ? "Home" : btnText}`}
         ></AddButton>
       </div>

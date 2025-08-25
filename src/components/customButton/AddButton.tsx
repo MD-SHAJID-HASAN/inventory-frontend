@@ -13,7 +13,7 @@ const AddButton: React.FC<IProps> = ({ btnText, href }) => {
       to={`${href}`}
       className="flex items-center md:space-x-2 py-2 px-4 my-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl hover:shadow-lg transition-a cursor-pointer"
     >
-      {btnText.length <=1 ? <Plus className="w-4 h-4"></Plus> : <Home className="w-4 h-4"></Home>}
+      {btnText.length <= 1 ? <Home className="w-4 h-4"></Home> : <Plus className="w-4 h-4"></Plus>}
       <span className="text-sm font-medium md:flex hidden">{btnText}</span>
     </Link>
   );
