@@ -4,6 +4,7 @@ import { useForm, useFieldArray } from "react-hook-form";
 import { API_URL } from "@/config";
 import usePostData from "@/hooks/usePostData";
 import { Delete } from "lucide-react";
+import PageWrapper from "@/components/PageWrapper/PageWrapper";
 
 type Item = {
   category: string;
@@ -116,7 +117,7 @@ export default function TransactionTableForm() {
   const removeButtonClass = "text-red-600 text-center";
 
   return (
-    <div>
+    <PageWrapper btnText="" href="" pageTitle="Make Transaction">
       <form onSubmit={handleSubmit(onSubmit)} className="max-w-5xl mx-auto mt-10 px-2 sm:px-4">
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between gap-6 dark:text-white">
@@ -155,10 +156,10 @@ export default function TransactionTableForm() {
 
           <div className="flex flex-col gap-2 w-full">
             <label>Date</label>
-            <input type="date" {...register("date")} className={inputClass} />
+            <input type="date" {...register("date", {required:true})} className={inputClass} />
 
             <label>Customer/Supplier</label>
-            <input type="text" {...register("party")} placeholder="Name" className={inputClass} />
+            <input type="text" {...register("party", {required: true})} placeholder="Name" className={inputClass} />
           </div>
         </div>
 
@@ -350,6 +351,6 @@ export default function TransactionTableForm() {
           </button>
         </div>
       </form>
-    </div>
+    </PageWrapper>
   );
 }
