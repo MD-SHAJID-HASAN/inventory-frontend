@@ -2,12 +2,9 @@
 const inputClass =
   "w-full p-2 bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-800 dark:text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all";
 const selectClass = `${inputClass}`;
-const buttonClass =
-  "px-4 py-2 rounded text-white transition-all";
-const addButtonClass =
-  "bg-blue-600 hover:bg-blue-700 " + buttonClass;
-const submitButtonClass =
-  "bg-green-600 hover:bg-green-700 " + buttonClass;
+const buttonClass = "px-4 py-2 rounded text-white transition-all";
+const addButtonClass = "bg-blue-600 hover:bg-blue-700 " + buttonClass;
+const submitButtonClass = "bg-green-600 hover:bg-green-700 " + buttonClass;
 const removeButtonClass = "bg-red-600 hover:bg-red-700 text-white px-2 rounded";
 
 import { useForm, useFieldArray } from "react-hook-form";
@@ -119,244 +116,243 @@ export default function AddProductForm() {
   };
 
   return (
-   <PageWrapper btnText="" pageTitle="New Product Model" href="">
-     <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="max-w-4xl w-full mx-auto p-6 border rounded space-y-4 bg-white dark:bg-slate-900 transition-colors"
-    >
-
-      {/* Shop */}
-      <div>
-        <label className="block font-medium text-slate-700 dark:text-slate-300">
-          Shop *
-        </label>
-        <select
-          {...register("shopId", { required: true })}
-          className={selectClass}
-          onChange={(e) => {
-            setShopId(e.target.value);
-            setValue("categoryId", "");
-            setValue("brandId", "");
-          }}
-        >
-          <option value="">Select Shop</option>
-          {(shops as any)?.data?.map((s: Shop) => (
-            <option key={s._id} value={s._id}>
-              {s.name}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {/* Category */}
-      <div>
-        <label className="block font-medium text-slate-700 dark:text-slate-300">
-          Category
-        </label>
-        <select
-          {...register("categoryId")}
-          className={selectClass}
-          disabled={!shopId}
-        >
-          <option value="">Select Category</option>
-          {(categories as any)?.data?.map((c: Category) => (
-            <option key={c._id} value={c._id}>
-              {c.name}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {/* Brand */}
-      <div>
-        <label className="block font-medium text-slate-700 dark:text-slate-300">
-          Brand *
-        </label>
-        <select
-          {...register("brandId", { required: true })}
-          className={selectClass}
-          disabled={!shopId}
-        >
-          <option value="">Select Brand</option>
-          {(brands as any)?.data?.map((b: Brand) => (
-            <option key={b._id} value={b._id}>
-              {b.name}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {/* Unit */}
-      <div>
-        <label className="block font-medium text-slate-700 dark:text-slate-300">
-          Unit *
-        </label>
-        <input
-          {...register("unit", { required: true })}
-          className={inputClass}
-          placeholder="e.g. kg, pcs"
-        />
-      </div>
-
-      {/* Name */}
-      <div>
-        <label className="block font-medium text-slate-700 dark:text-slate-300">
-          Name *
-        </label>
-        <input
-          {...register("name", { required: true })}
-          className={inputClass}
-        />
-      </div>
-
-      {/* Has Variation */}
-      <div className="text-slate-800 dark:text-slate-300">
-        <label className="block font-medium text-slate-700 dark:text-slate-300">
-          Has Variation?
-        </label>
-        <input
-          type="checkbox"
-          {...register("hasVariation")}
-          className="mr-2 accent-blue-500"
-        />{" "}
-        Yes
-      </div>
-
-      {/* Sizes (only if hasVariation) */}
-      {hasVariation && (
+    <PageWrapper btnText="" pageTitle="New Product Model" href="">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="max-w-4xl w-full mx-auto p-6 border rounded space-y-4 bg-white dark:bg-slate-900 transition-colors"
+      >
+        {/* Shop */}
         <div>
-          <label className="font-medium text-slate-700 dark:text-slate-300">
-            Sizes & Stock *
+          <label className="block font-medium text-slate-700 dark:text-slate-300">
+            Shop *
           </label>
-          {fields.map((field, index) => (
-            <div
-              key={field.id}
-              className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-2 mb-2"
-            >
-              <div>
-                <label className="block text-sm text-slate-600 dark:text-slate-400">
-                  Size
-                </label>
-                <input
-                  {...register(`sizes.${index}.size`, { required: true })}
-                  className={inputClass}
-                  placeholder="Size"
-                />
-              </div>
-              <div>
-                <label className="block text-sm text-slate-600 dark:text-slate-400">
-                  Size Unit
-                </label>
-                <input
-                  {...register(`sizes.${index}.sizeUnit`, { required: true })}
-                  className={inputClass}
-                  placeholder="Unit (cm, inch)"
-                />
-              </div>
-              <div>
-                <label className="block text-sm text-slate-600 dark:text-slate-400">
-                  Stock
-                </label>
-                <input
-                  type="number"
-                  {...register(`sizes.${index}.currentStock`, {
-                    valueAsNumber: true,
-                    required: true,
-                    min: 0,
-                  })}
-                  className={inputClass}
-                  placeholder="Stock"
-                />
-              </div>
-              <div>
-                <label className="block text-sm text-slate-600 dark:text-slate-400">
-                  Purchase Price
-                </label>
-                <input
-                  type="number"
-                  {...register(`sizes.${index}.purchasePrice`, {
-                    valueAsNumber: true,
-                    required: true,
-                    min: 0,
-                  })}
-                  className={inputClass}
-                  placeholder="Purchase Price"
-                />
-              </div>
-              <div className="flex items-end">
-                <button
-                  type="button"
-                  onClick={() => remove(index)}
-                  className={removeButtonClass}
-                  disabled={fields.length === 1}
-                >
-                  X
-                </button>
-              </div>
-            </div>
-          ))}
-
-          <button
-            type="button"
-            onClick={() =>
-              append({
-                size: "",
-                sizeUnit: "",
-                currentStock: 0,
-                purchasePrice: 0,
-                averageCost: 0,
-              })
-            }
-            className={addButtonClass}
+          <select
+            {...register("shopId", { required: true })}
+            className={selectClass}
+            onChange={(e) => {
+              setShopId(e.target.value);
+              setValue("categoryId", "");
+              setValue("brandId", "");
+            }}
           >
-            + Add Size
+            <option value="">Select Shop</option>
+            {(shops as any)?.data?.map((s: Shop) => (
+              <option key={s._id} value={s._id}>
+                {s.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* Category */}
+        <div>
+          <label className="block font-medium text-slate-700 dark:text-slate-300">
+            Category
+          </label>
+          <select
+            {...register("categoryId")}
+            className={selectClass}
+            disabled={!shopId}
+          >
+            <option value="">Select Category</option>
+            {(categories as any)?.data?.map((c: Category) => (
+              <option key={c._id} value={c._id}>
+                {c.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* Brand */}
+        <div>
+          <label className="block font-medium text-slate-700 dark:text-slate-300">
+            Brand *
+          </label>
+          <select
+            {...register("brandId", { required: true })}
+            className={selectClass}
+            disabled={!shopId}
+          >
+            <option value="">Select Brand</option>
+            {(brands as any)?.data?.map((b: Brand) => (
+              <option key={b._id} value={b._id}>
+                {b.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* Unit */}
+        <div>
+          <label className="block font-medium text-slate-700 dark:text-slate-300">
+            Unit *
+          </label>
+          <input
+            {...register("unit", { required: true })}
+            className={inputClass}
+            placeholder="e.g. kg, pcs"
+          />
+        </div>
+
+        {/* Name */}
+        <div>
+          <label className="block font-medium text-slate-700 dark:text-slate-300">
+            Name *
+          </label>
+          <input
+            {...register("name", { required: true })}
+            className={inputClass}
+          />
+        </div>
+
+        {/* Has Variation */}
+        <div className="text-slate-800 dark:text-slate-300 flex items-center space-x-2">
+          <input
+            id="hasVariation"
+            type="checkbox"
+            {...register("hasVariation")}
+            className="w-5 h-5 accent-blue-500"
+            defaultChecked={true}
+          />
+          <label htmlFor="hasVariation" className="font-medium cursor-pointer">
+            Has Variation?
+          </label>
+        </div>
+
+        {/* Sizes (only if hasVariation) */}
+        {hasVariation && (
+          <div className="">
+            <label className="font-medium text-slate-700 dark:text-slate-300">
+              Sizes & Stock *
+            </label>
+            {fields.map((field, index) => (
+              <div
+                key={field.id}
+                className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-2 mb-2"
+              >
+                <div>
+                  <label className="block text-sm text-slate-600 dark:text-slate-400">
+                    Size
+                  </label>
+                  <input
+                    {...register(`sizes.${index}.size`, { required: true })}
+                    className={inputClass}
+                    placeholder="Size"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm text-slate-600 dark:text-slate-400">
+                    Size Unit
+                  </label>
+                  <input
+                    {...register(`sizes.${index}.sizeUnit`, { required: true })}
+                    className={inputClass}
+                    placeholder="Unit (cm, inch)"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm text-slate-600 dark:text-slate-400">
+                    Stock
+                  </label>
+                  <input
+                    type="number"
+                    {...register(`sizes.${index}.currentStock`, {
+                      valueAsNumber: true,
+                      required: true,
+                      min: 0,
+                    })}
+                    className={inputClass}
+                    placeholder="Stock"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm text-slate-600 dark:text-slate-400">
+                    Purchase Price
+                  </label>
+                  <input
+                    type="number"
+                    {...register(`sizes.${index}.purchasePrice`, {
+                      valueAsNumber: true,
+                      required: true,
+                      min: 0,
+                    })}
+                    className={inputClass}
+                    placeholder="Purchase Price"
+                  />
+                </div>
+                <div className={`flex items-end w-full rounded-xl p-2`}>
+                  <button
+                    type="button"
+                    onClick={() => remove(index)}
+                    className={`${removeButtonClass} w-full`}
+                    disabled={fields.length === 1}
+                  >
+                    X
+                  </button>
+                </div>
+              </div>
+            ))}
+
+            <button
+              type="button"
+              onClick={() =>
+                append({
+                  size: "",
+                  sizeUnit: "",
+                  currentStock: 0,
+                  purchasePrice: 0,
+                  averageCost: 0,
+                })
+              }
+              className={`${addButtonClass} md:w-fit w-full`}
+            >
+              + Add Size
+            </button>
+          </div>
+        )}
+        {!hasVariation && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block font-medium text-slate-700 dark:text-slate-300">
+                Purchase Price
+              </label>
+              <input
+                type="number"
+                {...register("purchasePrice", {
+                  valueAsNumber: true,
+                  required: true,
+                  min: 0,
+                })}
+                className={inputClass}
+                placeholder="Purchase Price"
+              />
+            </div>
+
+            <div>
+              <label className="block font-medium text-slate-700 dark:text-slate-300">
+                Stock
+              </label>
+              <input
+                type="number"
+                {...register(`totalStock`, {
+                  valueAsNumber: true,
+                  required: true,
+                  min: 0,
+                })}
+                className={inputClass}
+                placeholder="Stock"
+              />
+            </div>
+          </div>
+        )}
+
+        {/* Submit */}
+        <div className="pt-4">
+          <button type="submit" className={submitButtonClass}>
+            Submit
           </button>
         </div>
-      )}
-
-      {!hasVariation && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label className="block font-medium text-slate-700 dark:text-slate-300">
-              Purchase Price
-            </label>
-            <input
-              type="number"
-              {...register("purchasePrice", {
-                valueAsNumber: true,
-                required: true,
-                min: 0,
-              })}
-              className={inputClass}
-              placeholder="Purchase Price"
-            />
-          </div>
-
-          <div>
-            <label className="block font-medium text-slate-700 dark:text-slate-300">
-              Stock
-            </label>
-            <input
-              type="number"
-              {...register(`totalStock`, {
-                valueAsNumber: true,
-                required: true,
-                min: 0,
-              })}
-              className={inputClass}
-              placeholder="Stock"
-            />
-          </div>
-        </div>
-      )}
-
-      {/* Submit */}
-      <div className="pt-4">
-        <button type="submit" className={submitButtonClass}>
-          Submit
-        </button>
-      </div>
-    </form>
-   </PageWrapper>
+      </form>
+    </PageWrapper>
   );
 }
