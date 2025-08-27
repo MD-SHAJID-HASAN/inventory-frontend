@@ -14,7 +14,7 @@ const usePostData = <T,>(url: string): UsePostDataReturn<T> => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<AxiosError | null>(null);
 
-console.log(API_URL)
+// console.log(API_URL)
 
   const post = async (payload: any) => {
     setLoading(true);

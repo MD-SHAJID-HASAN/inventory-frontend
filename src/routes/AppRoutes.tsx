@@ -9,6 +9,7 @@ import DashboardPage from "@/features/dashboard/DashboardPage";
 import Transactions from "@/features/transactions/Transactions";
 import Categories from "@/features/category/Categories";
 import Main from "@/components/Layout/Main";
+import ShopForm from "@/features/ShopForm";
 
 function AppRoutes() {
   const router = createBrowserRouter([
@@ -21,6 +22,10 @@ function AppRoutes() {
         {
           path: "/shops",
           element: <ShopList></ShopList>,
+        },
+        {
+          path: "/shop-form",
+          element: <ShopForm></ShopForm>,
         },
         {
           path: "/categories",
