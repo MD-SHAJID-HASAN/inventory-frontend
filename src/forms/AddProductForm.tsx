@@ -1,4 +1,4 @@
-// --- Styles ---
+// ---Universal Styles ---
 const inputClass =
   "w-full p-2 bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-800 dark:text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all";
 const selectClass = `${inputClass}`;
