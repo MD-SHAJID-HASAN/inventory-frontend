@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { useParams } from "react-router-dom";
 import useFetchData from "../../hooks/useFetchData";
+import PageWrapper from "@/components/PageWrapper/PageWrapper";
 
 interface Product {
   _id: string;
@@ -61,8 +62,7 @@ function Products() {
   const products = productData.data;
 
   return (
-    <div className="p-4">
-      <h2 className="text-xl font-bold mb-4">Products</h2>
+    <PageWrapper btnText="New Product" pageTitle="Products" href="/add-product-form">
 
       <table className="w-full border text-sm">
         <thead>
@@ -72,13 +72,11 @@ function Products() {
             <th className="border px-2 py-1 text-center">Stock</th>
             <th className="border px-2 py-1 text-right">Buying Price</th>
             <th className="border px-2 py-1 text-right">Stock Value</th>
-            <th className="border px-2 py-1 text-right">Selling Price</th>
-            <th className="border px-2 py-1 text-center">Actions</th>
           </tr>
         </thead>
         <tbody>
           {products.map((product) => (
-            <tr key={product._id}>
+            <tr key={product._id} className="text-white text-center">
               <td className="border px-2 py-1">{product.name}</td>
               <td className="border px-2 py-1">
                 {brandMap[product.brandId] || "Unknown"}
@@ -92,22 +90,11 @@ function Products() {
               <td className="border px-2 py-1 text-right">
                 {product.purchasePrice * product.totalStock}৳
               </td>
-              <td className="border px-2 py-1 text-right">
-                {product.sellingPrice}৳
-              </td>
-              <td className="border px-2 py-1 text-center">
-                <button className="px-2 py-1 bg-green-500 text-white rounded mr-1">
-                  +
-                </button>
-                <button className="px-2 py-1 bg-red-500 text-white rounded">
-                  −
-                </button>
-              </td>
             </tr>
           ))}
         </tbody>
       </table>
-    </div>
+    </PageWrapper>
   );
 }
 

@@ -38,7 +38,7 @@ function HeaderU({ onToggle }: any) {
             <Menu className="w-5 h-5"></Menu>
           </button>
 
-          <div className="hidden md:block">
+          <div className="hidden ">
             <h1 className="text-2xl font-black text-slate-800 dark:text-white">
               {"Dashboard"}
             </h1>

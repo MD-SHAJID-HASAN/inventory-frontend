@@ -1,3 +1,5 @@
+import useFetchData from "@/hooks/useFetchData";
+import LoadingSpinner from "@/loadingSpinner/LoadingSpinner";
 import {
   ArrowDownRight,
   ArrowUpRight,
@@ -7,50 +9,70 @@ import {
   Users,
 } from "lucide-react";
 
-const stats = [
-  {
-    title: "Total Revenue",
-    value: "$123,456",
-    change: "32.5%",
-    trend: "up",
-    icon: DollarSign,
-    color: "from-emerald-500 to teal-600",
-    bgColor: "bg-emerald-50 dark:bg-emerald-900/20",
-    textColor: "text-emerald-600 dark:text-emerald-400",
-  },
-  {
-    title: "Total Expenses",
-    value: "$45,678",
-    change: "25.2%",
-    trend: "down",
-    icon: CreditCard,
-    color: "from-red-500 to-red-300",
-    bgColor: "bg-red-50 dark:bg-red-900/20",
-    textColor: "text-red-600 dark:text-red-400",
-  },
-  {
-    title: "Active Users",
-    value: "8,245",
-    change: "43.8%",
-    trend: "up",
-    icon: Users,
-    color: "from-indigo-500 to-blue-300",
-    bgColor: "bg-indigo-50 dark:bg-indigo-900/20",
-    textColor: "text-indigo-600 dark:text-indigo-400",
-  },
-  {
-    title: "New Orders",
-    value: "1,234",
-    change: "59.1%",
-    trend: "up",
-    icon: ShoppingCart,
-    color: "from-amber-500 to-orange-300",
-    bgColor: "bg-amber-50 dark:bg-amber-900/20",
-    textColor: "text-amber-600 dark:text-amber-400",
-  },
-];
-
 function StatsGrid() {
+  interface Summary {
+    _id: string;
+    incomingTotal: number;
+  }
+
+interface Summary {
+  _id: string;
+  incomingTotal: number;
+  outgoingTotal: number;
+}
+
+interface SummaryResponse {
+  data: Summary;
+}
+
+const { data } = useFetchData<SummaryResponse>("/summary/day");
+
+if (!data) return <LoadingSpinner />;
+const summary = data.data;
+
+  const stats = [
+    {
+      title: "Revenue Today",
+      value: `BDT ${summary.incomingTotal}`,
+      change: "32.5%",
+      trend: "up",
+      icon: DollarSign,
+      color: "from-emerald-500 to teal-600",
+      bgColor: "bg-emerald-50 dark:bg-emerald-900/20",
+      textColor: "text-emerald-600 dark:text-emerald-400",
+    },
+    {
+      title: "Cost Today",
+      value: `BDT ${summary.outgoingTotal}`,
+      change: "25.2%",
+      trend: "down",
+      icon: CreditCard,
+      color: "from-red-500 to-red-300",
+      bgColor: "bg-red-50 dark:bg-red-900/20",
+      textColor: "text-red-600 dark:text-red-400",
+    },
+    {
+      title: "Active Users",
+      value: "8,245",
+      change: "43.8%",
+      trend: "up",
+      icon: Users,
+      color: "from-indigo-500 to-blue-300",
+      bgColor: "bg-indigo-50 dark:bg-indigo-900/20",
+      textColor: "text-indigo-600 dark:text-indigo-400",
+    },
+    {
+      title: "New Orders",
+      value: "1,234",
+      change: "59.1%",
+      trend: "up",
+      icon: ShoppingCart,
+      color: "from-amber-500 to-orange-300",
+      bgColor: "bg-amber-50 dark:bg-amber-900/20",
+      textColor: "text-amber-600 dark:text-amber-400",
+    },
+  ];
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 ">
       {stats.map((stat, index) => {
