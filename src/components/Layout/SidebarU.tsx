@@ -1,6 +1,7 @@
 import {
   BadgeDollarSign,
   BarChart3,
+  // BarChart3,
   ChevronDown,
   LayoutDashboard,
   List,
@@ -39,14 +40,14 @@ const menuItems = [
     active: false,
     badge: "New",
   },
-  {
-    id: "products",
-    href: "/products",
-    icon: Store,
-    label: "Products",
-    count: 100,
-    active: false,
-  },
+  // {
+  //   id: "products",
+  //   href: "/products",
+  //   icon: Store,
+  //   label: "Products",
+  //   count: 100,
+  //   active: false,
+  // },
 
   {
     id: "category",
