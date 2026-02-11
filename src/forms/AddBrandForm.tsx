@@ -23,6 +23,8 @@ function BrandManager() {
         Add Brand
       </button>
 
+      //test comment
+
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/50">
           <div className="bg-white p-6 rounded shadow-md w-80">
