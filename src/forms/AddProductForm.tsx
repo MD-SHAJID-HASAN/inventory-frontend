@@ -22,6 +22,7 @@ type SizeData = {
   averageCost: number;
 };
 
+//data type
 type ProductModelFormData = {
   shopId: string;
   categoryId?: string;
