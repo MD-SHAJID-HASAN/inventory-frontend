@@ -5,6 +5,8 @@ import type { Shop, Brand } from "@/types";
 import { useState } from "react";
 import PageWrapper from "@/components/PageWrapper/PageWrapper";
 
+
+//types
 type CategoryFormData = {
   name: string;
   shopId: string;
