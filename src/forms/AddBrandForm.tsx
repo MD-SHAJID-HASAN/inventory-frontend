@@ -1,5 +1,5 @@
 import { PlusCircle } from "lucide-react";
-import { useState } from "react";// or your icon library
+import { useState } from "react";
 
 function BrandManager() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -7,7 +7,7 @@ function BrandManager() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Call your API to add brand
+    
     console.log("Submitting brand:", brandName);
     setBrandName(""); // clear input
     setIsModalOpen(false); // close modal
